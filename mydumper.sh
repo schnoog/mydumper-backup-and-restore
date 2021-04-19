@@ -81,10 +81,10 @@ function runMysqldump () {
 	verifyExecution "$?" "Can't create backup dir $backupPath. $out" true
 	logInfo "[Info] $backupPath exists"
 
-	local schemas=$(mysql -u${mysqlUser} -h${remoteHost} --port=${3306} -N -e"select schema_name from information_schema.schemata where schema_name not in ('information_schema', 'performance_schema')")
+	local schemas=$(mysql -u${mysqlUser} -p${mysqlPassword} -h${remoteHost} --port=${3306} -N -e"select schema_name from information_schema.schemata where schema_name not in ('information_schema', 'performance_schema')")
 	if [ ! -z "$schemas" ]; then
 		for i in $schemas; do
-			out=$(mysqldump -u${mysqlUser} -h${remoteHost} --port=${3306} -d $i | gzip > $backupPath/${i}_schema.sql.gz 2>&1)
+			out=$(mysqldump -u${mysqlUser} -p${mysqlPassword} -h${remoteHost} --port=${3306} -d $i | gzip > $backupPath/${i}_schema.sql.gz 2>&1)
 			verifyExecution "$?" "Problems dumping schema for db $i. $out"
 			logInfo "[OK] Dumping $i schema with mysqldump"
 		done
@@ -104,7 +104,7 @@ function runMydumper () {
 
 	verifyMydumperBin
 	logInfo "[Info] Dumping data with MyDumper.....start"
-	out=$(mydumper --user=${mysqlUser} --outputdir=${backupPath} --host=${remoteHost} --port=${mysqlPort} --threads=${numberThreads} --compress --kill-long-queries --no-schemas --verbose=3 &>> $logFile)
+	out=$(mydumper --user=${mysqlUser} --password=${mysqlPassword} --outputdir=${backupPath} --host=${remoteHost} --port=${mysqlPort} --threads=${numberThreads} --compress --kill-long-queries --no-schemas --verbose=3 &>> $logFile)
 	verifyExecution "$?" "Couldn't execute MyDumper. $out" true
 
 	logInfo "[Info] Dumping data with MyDumper.....end"

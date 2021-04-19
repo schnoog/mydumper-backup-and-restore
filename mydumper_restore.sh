@@ -80,7 +80,7 @@ function RecoverDataseSpool {
 
 				for import in ${imports[*]}
 				do
-					zcat "$import" | mysql -u${mysqlUser} -h${remoteHost} --port=${mysqlPort} "$DB"				
+					zcat "$import" | mysql -u${mysqlUser} -p${mysqlPassword} -h${remoteHost} --port=${mysqlPort} "$DB"				
 				done
 				echo "- $DB recovered $int tables "
 

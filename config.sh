@@ -12,7 +12,9 @@ daily=7
 export BASEDIR="/DBBackups/mydumper/"
 
 #MySQL Settings
-mysqlUser=root
+mysqlUser=mydump
+mysqlPassword=$(cat  /root/mydump_pw)  #Set your 
+
 mysqlPort=3306
 remoteHost=localhost
 
