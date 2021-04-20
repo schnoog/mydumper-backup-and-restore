@@ -6,9 +6,15 @@ Tools to enhance the MySQL Backup experience and make it easier (almost plug and
 
 Source: [mydumper.sh](https://github.com/nethalo/backup-scripts) 
 
+## Why mydumper and not only mysqldump ?
+Mydumper is "a little bit" faster. At least accoding to my experience.
 
-All the scripts take care of the retention policy (defined by the user), as followed:
+My test case is a bunch of databases (/var/lib/mysql size is 5.8GB)
+- mydumper.sh script: 71 seconds
+- mysqldump --all-databases | gzip -1 > all_dbs.sql.gz : 117 seconds
+ 
 
+The script takes care of the retention policy (defined by the user), as followed:
 - For MyDumper: User will define weekly and daily retention times.
 
 ## MyDumper backup
