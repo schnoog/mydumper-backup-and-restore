@@ -12,8 +12,9 @@ daily=7
 export BASEDIR="/DBBackups/mydumper/"
 
 #MySQL Settings
+##mysqlUser has to be privileged
 mysqlUser=mydump
-mysqlPassword=$(cat  /root/mydump_pw)  #Set your 
+mysqlPassword=$(cat  /root/mydump_pw)  #Set the password for the user here
 
 mysqlPort=3306
 remoteHost=localhost
